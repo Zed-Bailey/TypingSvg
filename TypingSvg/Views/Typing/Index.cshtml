@@ -1,0 +1,129 @@
+@model TypingViewModel
+
+@{
+    Layout = null;
+}
+
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 @Model.Width @Model.Height"
+     style="background-color: @Model.BackgroundColour;"
+     width="@Model.Width"
+     height="@Model.Height">
+    
+    @{
+        var lines = Model.Lines?.Split(";") ?? Array.Empty<string>();
+        var duration = 5000;
+        var pause = 1000;
+    }
+
+    
+    @for (int i = 0; i < lines.Length; ++i)
+    {
+        
+        var beginning = $"d{i - 1}.end";
+        @if (i == 0) {
+            // if this is the first line, start at 0 seconds
+            // and also after the last line if repeat is true
+            beginning = Model.Repeat ? $"0s;d{lines.Length-1}.end" : "0s";
+        }
+            // don't delete text after typing the last line if repeat is false
+        // var freeze = !$repeat && $i == $lastLineIndex;
+            // empty line values
+        var yOffset = Model.Height / 2;
+        var emptyLine = $"m0,{yOffset} h0";
+        var fullLine = $"m0,{yOffset} h{Model.Width}";
+        var values = new string[] {emptyLine, fullLine, fullLine, emptyLine};
+        // keyTimes for the animation
+        var keyTimes = new string[] {
+            "0",
+            $"{(0.8 * duration) / (duration + pause)}",
+            $"{(0.8 * duration + pause) / (duration + pause)}",
+            "1",
+        };
+    
+        
+        <path id="path@(i)">
+            
+            <animate 
+                id="d@(i)"
+                attributeName="d"
+                begin="@(beginning)"
+                dur="@(duration + pause)ms"
+                fill="remove"
+                values="@(string.Join(';', values))"
+                keyTimes="@(string.Join(';', keyTimes))"
+            />
+            
+        </path>
+        
+        // have to wrap text in another text element
+        // otherwise the following error is thrown:
+        // error RZ1023: "<text>" and "</text>" tags cannot contain attributes
+        // https://github.com/dotnet/aspnetcore/issues/11316
+        <text>
+            <text font-family='monospace' fill="#36BCF7" font-size="20"
+                  dominant-baseline="auto"
+                  x="0%" text-anchor="start">
+                <textPath xlink:href="#path@(i)">
+                    @(lines[i])
+                </textPath>
+            </text>
+        </text>
+    }
+
+</svg>
+
+
+<!-- https://github.com/DenverCoder1/readme-typing-svg/ -->
+@*
+<svg xmlns='http://www.w3.org/2000/svg'
+    xmlns:xlink='http://www.w3.org/1999/xlink'
+    viewBox='0 0 <?= "$width $height" ?>'
+    style='background-color: <?= $background ?>;'
+    width='<?= $width ?>px' height='<?= $height ?>px'>
+    
+
+    <?php $lastLineIndex = count($lines) - 1; ?>
+    <?php for ($i = 0; $i <= $lastLineIndex; ++$i): ?>
+        <path id='path<?= $i ?>'>
+                <!-- Single line -->
+                <?php
+                // start after previous line
+                $begin = "d" . ($i - 1) . ".end";
+                if ($i == 0) {
+                    // if this is the first line, start at 0 seconds
+                    // and also after the last line if repeat is true
+                    $begin = $repeat ? "0s;d$lastLineIndex.end" : "0s";
+                }
+                // don't delete text after typing the last line if repeat is false
+                $freeze = !$repeat && $i == $lastLineIndex;
+                // empty line values
+                $yOffset = $height / 2;
+                $emptyLine = "m0,$yOffset h0";
+                $fullLine = "m0,$yOffset h$width";
+                $values = [$emptyLine, $fullLine, $fullLine, $freeze ? $fullLine : $emptyLine];
+                // keyTimes for the animation
+                $keyTimes = [
+                    "0",
+                    (0.8 * $duration) / ($duration + $pause),
+                    (0.8 * $duration + $pause) / ($duration + $pause),
+                    "1",
+                ];
+                ?>
+                <animate id='d<?= $i ?>' attributeName='d' begin='<?= $begin ?>'
+                    dur='<?= $duration + $pause ?>ms' fill='<?= $freeze ? "freeze" : "remove" ?>'
+                    values='<?= implode(" ; ", $values) ?>' keyTimes='<?= implode(";", $keyTimes) ?>' />
+            
+        </path>
+    <text font-family='"<?= $font ?>", monospace' fill='<?= $color ?>' font-size='<?= $size ?>'
+        dominant-baseline='<?= $vCenter ? "middle" : "auto" ?>'
+        x='<?= $center ? "50%" : "0%" ?>' text-anchor='<?= $center ? "middle" : "start" ?>'>
+        <textPath xlink:href='#path<?= $i ?>'>
+            <?= $lines[$i] . "\n" ?>
+        </textPath>
+    </text>
+<?php endfor; ?>
+</svg>
+*@
