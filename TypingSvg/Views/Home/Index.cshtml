@@ -25,6 +25,18 @@
                 <textarea class="form-control" id="Lines" rows="3">Hello World</textarea>
             </div>
             
+            <div class="d-inline mb-3">
+                <div class="">
+                    <label for="fontColour" class="form-label">Font Colour</label>
+                    <input type="color" value="#36BCF7" id="fontColour" class="form-control form-control-color"/>
+                </div>
+                <div class="">
+                    <label for="backgroundColour" class="form-label">Background Colour</label>
+                    <input type="color" value="#00000000" id="backgroundColour" class="form-control form-control-color"/>
+                </div>
+            </div>
+            
+            
             <button onclick="generate()" class="btn btn-primary rounded-1">Generate</button>
             
             <div class="form-check">
@@ -35,7 +47,9 @@
         </div>
 
         <div class="col">
-            <img id="generated" src="" alt="typing svg" class=""/>
+            <div>
+                <img id="generated" src="" alt="typing svg" class=""/>
+            </div>
             <a id="generatedLink"></a>
         </div>
     </div>
@@ -74,8 +88,10 @@
         //
         let width = document.getElementById("Width").value;
         let height = document.getElementById("Height").value;
+        let fontColour = document.getElementById("fontColour").value.replace('#', '');
+        let backgroundColour = document.getElementById("backgroundColour").value.replace('#', '');
         
-        let link = `/Typing?height=${height}&width=${width}&Lines=${lines}`;
+        let link = `/Typing?height=${height}&width=${width}&Lines=${lines}&fontColour=${fontColour}&backgroundColour=${backgroundColour}`;
         ele.src = link;
         document.getElementById("generatedLink").innerHTML = link;
         document.getElementById("generatedLink").href = link;

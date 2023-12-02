@@ -8,7 +8,7 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
      viewBox="0 0 @Model.Width @Model.Height"
-     style="background-color: @Model.BackgroundColour;"
+     style="background-color: #@Model.BackgroundColour;"
      width="@Model.Width"
      height="@Model.Height">
     
@@ -63,7 +63,7 @@
         // error RZ1023: "<text>" and "</text>" tags cannot contain attributes
         // https://github.com/dotnet/aspnetcore/issues/11316
         <text>
-            <text font-family='monospace' fill="#36BCF7" font-size="20"
+            <text font-family='monospace' fill="#@(Model.FontColour)" font-size="20"
                   dominant-baseline="auto"
                   x="0%" text-anchor="start">
                 <textPath xlink:href="#path@(i)">

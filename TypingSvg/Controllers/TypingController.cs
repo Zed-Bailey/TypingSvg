@@ -17,14 +17,11 @@ public class TypingController : Controller
      
         if (!ModelState.IsValid)
         {
-            Console.WriteLine("Invalid model state");
-            return BadRequest("invalid model");
+            return ValidationProblem(ModelState);
         }
-        
-        
-        
-        
+        // add the response headers so the view can be rendered as an svg
         Response.Headers.ContentType = "image/svg+xml";
+        
         return View(model);
 
     }
