@@ -2,6 +2,12 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    .bordered {
+        border: 3px dashed red;
+    }
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col">
@@ -20,10 +26,16 @@
             </div>
             
             <button onclick="generate()" class="btn btn-primary rounded-1">Generate</button>
+            
+            <div class="form-check">
+                <label for="showBorder" class="form-check-label">Show Border</label>
+                <input type="checkbox" id="showBorder" class="form-check-input"/>
+            </div>
+            
         </div>
 
         <div class="col">
-            <img id="generated" src="" alt="typing svg"/>
+            <img id="generated" src="" alt="typing svg" class=""/>
             <a id="generatedLink"></a>
         </div>
     </div>
@@ -34,7 +46,18 @@
 <script type="text/javascript">
     window.addEventListener("load", () => {
         generate();
-    })
+        let img = document.getElementById("generated");
+        let borderToggle = document.getElementById("showBorder");
+        borderToggle.addEventListener("change", () => {
+            if (borderToggle.checked) {
+                img.classList.add("bordered");
+            } else {
+                img.classList.remove("bordered");
+            }
+        });
+    });
+    
+    
 
     // parse the input text, replaces spaces with '+' and seperates lines by ';'
     function parseLines () {
