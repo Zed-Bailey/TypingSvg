@@ -4,13 +4,13 @@ namespace TypingSvg.Models;
 
 public class TypingViewModel
 {
-    [Required]
+    [Required(ErrorMessage = "Width is required")]
     public int Width { get; set; }
     
-    [Required]
+    [Required(ErrorMessage = "Height is required")]
     public int Height { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Lines is required")]
     public string? Lines;
     
     public string BackgroundColour { get; set; } = "00000000";
