@@ -19,6 +19,7 @@ public class TypingController : Controller
         {
             return ValidationProblem(ModelState);
         }
+        
         // add the response headers so the view can be rendered as an svg
         Response.Headers.ContentType = "image/svg+xml";
         

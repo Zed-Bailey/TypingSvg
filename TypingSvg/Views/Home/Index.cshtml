@@ -2,6 +2,10 @@
     ViewData["Title"] = "Home Page";
 }
 
+@* Colour picker *@
+<link rel="stylesheet" href="lib/coloris/coloris.min.css"/>
+<script src="lib/coloris/coloris.min.js"></script>
+
 <style>
     .bordered {
         border: 3px dashed red;
@@ -25,14 +29,16 @@
                 <textarea class="form-control" id="Lines" rows="3">Hello World</textarea>
             </div>
             
-            <div class="d-inline mb-3">
-                <div class="">
+            <div class="row mb-3">
+                <div class="col">
                     <label for="fontColour" class="form-label">Font Colour</label>
-                    <input type="color" value="#36BCF7" id="fontColour" class="form-control form-control-color"/>
+                    @* <input type="color" value="#36BCF7" id="fontColour" class="form-control form-control-color"/> *@
+                    <input type="text" data-coloris id="fontColour"/>
                 </div>
-                <div class="">
+                
+                <div class="col">
                     <label for="backgroundColour" class="form-label">Background Colour</label>
-                    <input type="color" value="#00000000" id="backgroundColour" class="form-control form-control-color"/>
+                    <input type="text" data-coloris value="#00000000" id="backgroundColour" />
                 </div>
             </div>
             
@@ -94,7 +100,7 @@
         let link = `/Typing?height=${height}&width=${width}&Lines=${lines}&fontColour=${fontColour}&backgroundColour=${backgroundColour}`;
         ele.src = link;
         document.getElementById("generatedLink").innerHTML = link;
-        document.getElementById("generatedLink").href = link;
+        document.getElementById("generatedLink").href = window.location.host + link;
         
     }
 
