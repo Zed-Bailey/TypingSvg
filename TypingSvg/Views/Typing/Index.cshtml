@@ -63,7 +63,7 @@
         // error RZ1023: "<text>" and "</text>" tags cannot contain attributes
         // https://github.com/dotnet/aspnetcore/issues/11316
         <text>
-            <text font-family='monospace' fill="#@(Model.FontColour)" font-size="20"
+            <text font-family='monospace' fill="#@(Model.FontColour)" font-size="@(Model.FontSize)"
                   dominant-baseline="@(Model.VCenter ? "middle" : "auto")"
                   x="@(Model.HCenter ? "50%" : "0%")" text-anchor="@(Model.HCenter ? "middle" : "start")"
             >

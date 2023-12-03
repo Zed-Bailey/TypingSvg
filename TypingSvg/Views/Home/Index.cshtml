@@ -1,20 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Editor";
 }
 
-@* Colour picker *@
-<link rel="stylesheet" href="lib/coloris/coloris.min.css"/>
-<script src="lib/coloris/coloris.min.js"></script>
 
-<style>
-    .bordered {
-        border: 3px dashed red;
-    }
-</style>
 
 <div class="container">
     <div class="row">
         <div class="col">
+            <h4>Edit SVG properties</h4>
+            <hr/>
+            
             <div class="mb-3">
                 <label for="Width" class="form-label">Width</label>
                 <input class="form-control" id="Width" placeholder="500" value="500">
@@ -23,57 +18,62 @@
                 <label for="Height" class="form-label">Height</label>
                 <input class="form-control" id="Height" placeholder="50" value="50">
             </div>
-            
+
+            <div class="mb-3">
+                <label for="fontSize" class="form-label">Font Size</label>
+                <input class="form-control" id="fontSize" placeholder="20" value="20">
+            </div>
+
+
             <div class="mb-3">
                 <label for="Lines" class="form-label">Lines</label>
                 <textarea class="form-control" id="Lines" rows="3">Hello World</textarea>
             </div>
-            
+
             <div class="mb-3">
                 <label for="lineTime" class="form-label">Duration (ms per line)</label>
                 <input class="form-control" id="lineTime" placeholder="5000" value="5000">
             </div>
-            
+
             <div class="mb-3">
                 <label for="pauseTime" class="form-label">Pause (ms after line)</label>
                 <input class="form-control" id="pauseTime" placeholder="1000" value="1000">
             </div>
-            
-            
+
+
             <div class="row mb-3">
                 <div class="col">
                     <label for="fontColour" class="form-label">Font Colour</label>
-                    @* <input type="color" value="#36BCF7" id="fontColour" class="form-control form-control-color"/> *@
                     <input type="text" data-coloris id="fontColour" value="#36BCF7"/>
                 </div>
-                
+
                 <div class="col">
                     <label for="backgroundColour" class="form-label">Background Colour</label>
-                    <input type="text" data-coloris value="#00000000" id="backgroundColour" />
+                    <input type="text" data-coloris value="#00000000" id="backgroundColour"/>
                 </div>
             </div>
-            
+
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="horizontalCenter">
                 <label class="form-check-label" for="horizontalCenter">
                     Center Horizontally
                 </label>
             </div>
-            
+
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="verticalCenter">
-              <label class="form-check-label" for="verticalCenter">
-                  Center Vertically
-              </label>
+                <input class="form-check-input" type="checkbox" value="" id="verticalCenter">
+                <label class="form-check-label" for="verticalCenter">
+                    Center Vertically
+                </label>
             </div>
 
 
             <hr/>
-            
+
             <button onclick="generate()" class="btn btn-primary rounded-1">Generate</button>
-            
-            
-            
+
+
+
         </div>
 
         <div class="col">
@@ -95,8 +95,20 @@
 </div>
 
 
-
-<script type="text/javascript">
+@section Scripts
+{ 
+    @* Colour picker *@
+    <link rel="stylesheet" href="/lib/coloris/coloris.min.css"/>
+    <script src="/lib/coloris/coloris.min.js"></script>
+    
+    <style>
+        .bordered {
+            border: 3px dashed red;
+        }
+    </style>
+    
+    
+    <script type="text/javascript">
     window.addEventListener("load", () => {
         generate();
         let img = document.getElementById("generated");
@@ -133,6 +145,7 @@
         let duration = document.getElementById("lineTime").value;
         let horizontalCenter = document.getElementById("horizontalCenter")?.checked ?? false;
         let verticalCenter = document.getElementById("verticalCenter")?.checked ?? false;
+        let fontSize = document.getElementById("fontSize").value;
         
         let queryParamData = {
             height: height,
@@ -143,7 +156,8 @@
             pause: pause,
             duration: duration,
             hcenter: horizontalCenter,
-            vcenter: verticalCenter
+            vcenter: verticalCenter,
+            fontSize: fontSize,
         };
         
         let queryParams = new URLSearchParams(queryParamData);
@@ -160,3 +174,4 @@
 
 
 </script>
+}

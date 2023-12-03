@@ -14,7 +14,7 @@ public class TypingController : Controller
     public IActionResult Index(TypingViewModel model)
     {
         model.Lines = Request.Query["lines"];
-     
+        
         if (!ModelState.IsValid)
         {
             return ValidationProblem(ModelState);

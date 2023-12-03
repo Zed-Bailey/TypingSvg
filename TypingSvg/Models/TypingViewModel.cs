@@ -25,4 +25,5 @@ public class TypingViewModel
     public bool HCenter { get; set; } = false;
     public bool VCenter { get; set; } = false;
 
+    public int FontSize { get; set; } = 20;
 }
