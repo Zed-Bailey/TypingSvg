@@ -18,6 +18,9 @@ public class TypingViewModel
     public string FontColour { get; set; } = "36BCF7";
     public bool Repeat { get; set; } = true;
 
+    public int Duration { get; set; } = 5000;
+    
+    public int Pause { get; set; } = 1000;
 
 
 

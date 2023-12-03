@@ -29,11 +29,22 @@
                 <textarea class="form-control" id="Lines" rows="3">Hello World</textarea>
             </div>
             
+            <div class="mb-3">
+                <label for="lineTime" class="form-label">Duration (ms per line)</label>
+                <input class="form-control" id="lineTime" placeholder="5000" value="5000">
+            </div>
+            
+            <div class="mb-3">
+                <label for="pauseTime" class="form-label">Pause (ms after line)</label>
+                <input class="form-control" id="pauseTime" placeholder="1000" value="1000">
+            </div>
+            
+            
             <div class="row mb-3">
                 <div class="col">
                     <label for="fontColour" class="form-label">Font Colour</label>
                     @* <input type="color" value="#36BCF7" id="fontColour" class="form-control form-control-color"/> *@
-                    <input type="text" data-coloris id="fontColour"/>
+                    <input type="text" data-coloris id="fontColour" value="#36BCF7"/>
                 </div>
                 
                 <div class="col">
@@ -42,20 +53,42 @@
                 </div>
             </div>
             
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="horizontalCenter">
+                <label class="form-check-label" for="horizontalCenter">
+                    Center Horizontally
+                </label>
+            </div>
+            
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="verticalCenter">
+              <label class="form-check-label" for="verticalCenter">
+                  Center Vertically
+              </label>
+            </div>
+
+
+            <hr/>
             
             <button onclick="generate()" class="btn btn-primary rounded-1">Generate</button>
             
-            <div class="form-check">
-                <label for="showBorder" class="form-check-label">Show Border</label>
-                <input type="checkbox" id="showBorder" class="form-check-input"/>
-            </div>
+            
             
         </div>
 
         <div class="col">
+            <h4>Preview SVG</h4>
+            <hr/>
             <div>
                 <img id="generated" src="" alt="typing svg" class=""/>
             </div>
+            <div class="form-check mt-2">
+                <label for="showBorder" class="form-check-label">Show Border</label>
+                <input type="checkbox" id="showBorder" class="form-check-input"/>
+            </div>
+            
+            <h4 class="mt-4">Generated Link</h4>
+            <hr/>
             <a id="generatedLink"></a>
         </div>
     </div>
@@ -82,7 +115,7 @@
     // parse the input text, replaces spaces with '+' and seperates lines by ';'
     function parseLines () {
         let textArea = document.getElementById("Lines");
-        let text = textArea.value.replace(' ', '+').split('\n');
+        let text = textArea.value.replaceAll(' ', '+').split('\n');
         return text.join(';');
     }
 
@@ -96,11 +129,28 @@
         let height = document.getElementById("Height").value;
         let fontColour = document.getElementById("fontColour").value.replace('#', '');
         let backgroundColour = document.getElementById("backgroundColour").value.replace('#', '');
+        let pause = document.getElementById("pauseTime").value;
+        let duration = document.getElementById("lineTime").value;
         
-        let link = `/Typing?height=${height}&width=${width}&Lines=${lines}&fontColour=${fontColour}&backgroundColour=${backgroundColour}`;
+        let queryParamData = {
+            height: height,
+            width: width,
+            lines: lines,
+            fontColour: fontColour,
+            backgroundColour: backgroundColour,
+            pause: pause,
+            duration: duration
+        }
+        
+        let queryParams = new URLSearchParams(queryParamData);
+        // replaces the encoded '+' with '+' again
+        // does the same with the semi colon
+        let queryParamsEncoded = queryParams.toString().replace(/%3B/g, ";").replace(/%2B/g, "+");
+        let link = `/Typing?${queryParamsEncoded}`;
+        
         ele.src = link;
-        document.getElementById("generatedLink").innerHTML = link;
-        document.getElementById("generatedLink").href = window.location.host + link;
+        document.getElementById("generatedLink").innerHTML = window.location.origin + link;
+        document.getElementById("generatedLink").href = window.location.origin + link;
         
     }
 

@@ -14,8 +14,8 @@
     
     @{
         var lines = Model.Lines?.Split(";") ?? Array.Empty<string>();
-        var duration = 5000;
-        var pause = 1000;
+        var duration = Model.Duration;
+        var pause = Model.Pause;
     }
 
     
