@@ -131,6 +131,8 @@
         let backgroundColour = document.getElementById("backgroundColour").value.replace('#', '');
         let pause = document.getElementById("pauseTime").value;
         let duration = document.getElementById("lineTime").value;
+        let horizontalCenter = document.getElementById("horizontalCenter")?.checked ?? false;
+        let verticalCenter = document.getElementById("verticalCenter")?.checked ?? false;
         
         let queryParamData = {
             height: height,
@@ -139,8 +141,10 @@
             fontColour: fontColour,
             backgroundColour: backgroundColour,
             pause: pause,
-            duration: duration
-        }
+            duration: duration,
+            hcenter: horizontalCenter,
+            vcenter: verticalCenter
+        };
         
         let queryParams = new URLSearchParams(queryParamData);
         // replaces the encoded '+' with '+' again

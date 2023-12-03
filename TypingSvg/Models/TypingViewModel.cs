@@ -22,8 +22,7 @@ public class TypingViewModel
     
     public int Pause { get; set; } = 1000;
 
-
-
-
+    public bool HCenter { get; set; } = false;
+    public bool VCenter { get; set; } = false;
 
 }

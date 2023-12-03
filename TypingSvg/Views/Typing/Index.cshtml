@@ -64,8 +64,9 @@
         // https://github.com/dotnet/aspnetcore/issues/11316
         <text>
             <text font-family='monospace' fill="#@(Model.FontColour)" font-size="20"
-                  dominant-baseline="auto"
-                  x="0%" text-anchor="start">
+                  dominant-baseline="@(Model.VCenter ? "middle" : "auto")"
+                  x="@(Model.HCenter ? "50%" : "0%")" text-anchor="@(Model.HCenter ? "middle" : "start")"
+            >
                 <textPath xlink:href="#path@(i)">
                     @(lines[i])
                 </textPath>
